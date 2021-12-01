@@ -17,7 +17,7 @@ It may be a little bit of overthinking, but the `sbt` project is structured to c
 Once the `sbt` prompt shows up, you need to *switch* to the current year in order to run its puzzles:
 
     sbt:AdventOfCode> l
-    [info] In file:/Volumes/Backup%20CURA/Workarea/personal/Advent_of_Code/scala/
+    [info] In file:<project folder>
     [info]   * AdventOfCode
     [info]     Year_2021
     sbt:AdventOfCode> cd Year_2021
