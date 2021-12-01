@@ -2,10 +2,9 @@ package it.imolab.adventOfCode._2021.Day01
 
 import scala.io.Source
 
-val puzzle: List[Int] = Source.fromFile("2021/src/main/resources/Day01.input.txt").getLines.map(s => s.toInt).toList
-def delta (l: Seq[Int]): Int = if (l(0) < l(1)) 1 else 0
+private val puzzle: List[Int] = Source.fromFile("2021/src/main/resources/Day01.input.txt").getLines.map(s => s.toInt).toList
+private def delta (l: Seq[Int]): Int = if (l(0) < l(1)) 1 else 0
 
-@main def answer_1 =
 /*
 
 --- Day 1: Sonar Sweep ---
@@ -60,14 +59,10 @@ In this example, there are 7 measurements that are larger than the previous meas
 
 How many measurements are larger than the previous measurement?
 */
-  val result = puzzle.sliding(2).map(delta).sum
-
-  println(s"Day 01 - answer 1: $result")
-end answer_1
+def solve_1 (p: List[Int]): Int = p.sliding(2).map(delta).sum
 
 // ===================================================================
 
-@main def answer_2 =
 /*
 --- Part Two ---
 
@@ -105,7 +100,9 @@ In this example, there are 5 sums that are larger than the previous sum.
 
 Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
 */
-  val result = puzzle.sliding(3).map(v => v.sum).sliding(2).map(delta).sum
+def solve_2 (p: List[Int]): Int = p.sliding(3).map(v => v.sum).sliding(2).map(delta).sum
 
-  println(s"Day 01 - answer 2: $result")
-end answer_2
+
+// @main def answer_1 = println("2021 - Day 01 - answer 1: " + Day01.solve_1(puzzle))
+@main def answer_1 = println("2021 - Day 01 - answer 1: " + solve_1(puzzle))
+@main def answer_2 = println("2021 - Day 01 - answer 2: " + solve_2(puzzle))
