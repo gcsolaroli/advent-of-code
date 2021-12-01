@@ -2,7 +2,7 @@ package it.imolab.adventOfCode._2021.Day01
 
 import scala.io.Source
 
-val puzzle: List[Int] = Source.fromFile("src/main/resources/Day01.input.txt").getLines.map(s => s.toInt).toList
+val puzzle: List[Int] = Source.fromFile("2021/src/main/resources/Day01.input.txt").getLines.map(s => s.toInt).toList
 def delta (l: Seq[Int]): Int = if (l(0) < l(1)) 1 else 0
 
 @main def answer_1 =

@@ -1,6 +1,6 @@
 import Dependencies._
 
-ThisBuild / organization := "it.imolab"
+ThisBuild / organization := "it.imolab.adventOfCode"
 ThisBuild / scalaVersion := "3.1.0"
 
 ThisBuild / scalacOptions ++=
@@ -15,10 +15,27 @@ ThisBuild / scalacOptions ++=
     "-Ysafe-init", // experimental (I've seen it cause issues with circe)
   ) ++ Seq("-rewrite", "-indent") ++ Seq("-source", "future")
 
-lazy val `AdventOfCode_2021` =
-  project
+// lazy val `root` =
+//   project
+//     .in(file("."))
+
+lazy val `AdventOfCode` = project
     .in(file("."))
-    .settings(name := "advent-of-code_2021")
+    .settings(name := "AdventOfCode")
+    .aggregate(`Year_2020`, `Year_2021`)
+    dependsOn(`Year_2020`, `Year_2021`)
+
+lazy val `Year_2021` =
+  project
+    .in(file("2021"))
+    .settings(name := "2021")
+    .settings(commonSettings)
+    .settings(dependencies)
+
+lazy val `Year_2020` =
+  project
+    .in(file("2020"))
+    .settings(name := "2020")
     .settings(commonSettings)
     .settings(dependencies)
 

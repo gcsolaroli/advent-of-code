@@ -4,7 +4,7 @@ addCommandAlias("l", "projects")
 addCommandAlias("ll", "projects")
 addCommandAlias("ls", "projects")
 addCommandAlias("cd", "project")
-addCommandAlias("root", "cd clipperz-backend")
+addCommandAlias("root", "cd AdventOfCode")
 addCommandAlias("c", "compile")
 addCommandAlias("ca", "Test / compile")
 addCommandAlias("t", "test")
@@ -31,7 +31,7 @@ onLoadMessage +=
       |├─────────────┬───────────────────┤
       |│ ${styled("l")} | ${styled("ll")} | ${styled("ls")} │ projects          │
       |│ ${styled("cd")}          │ project           │
-      |│ ${styled("root")}        │ cd root           │
+      |│ ${styled("root")}        │ cd AdventOfCode   │
       |│ ${styled("c")}           │ compile           │
       |│ ${styled("ca")}          │ compile all       │
       |│ ${styled("t")}           │ test              │
