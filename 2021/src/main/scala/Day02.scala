@@ -40,22 +40,25 @@ Calculate the horizontal position and depth you would have after following the p
 What do you get if you multiply your final horizontal position by your final depth?
 
 */
-private def textToMovement (t: String): (Int, Int) =
+
+private case class Movement(distance: Int, depth: Int)
+private def textLineToMovement (t: String): Movement =
   val pattern : Regex = "([A-Za-z]+) ([0-9]+)".r
 
   t match
     case pattern(command, txtValue) => {
       val value = txtValue.toInt
-      if      command == "forward" then (value, 0)
-      else if command == "up"      then (0, -value)
-      else if command == "down"    then (0, value)
-      else (0, 0)
+      if      command == "forward" then Movement(value, 0)
+      else if command == "up"      then Movement(0, -value)
+      else if command == "down"    then Movement(0, value)
+      else Movement(0, 0)
     }
 
-private def addMovements (m1: (Int, Int), m2: (Int, Int)): (Int, Int) = (m1(0) + m2(0), m1(1) + m2(1))
+private def addMovements (m1: Movement, m2: Movement): Movement = Movement(m1.distance + m2.distance, m1.depth + m2.depth)
+
 def solve_1 (p: List[String]) =
-  val (position, depth) = p.map(textToMovement).foldLeft((0, 0))(addMovements)
-  position * depth
+  val movement : Movement = p.map(textLineToMovement).foldLeft(Movement(0, 0))(addMovements)
+  movement.distance * movement.depth
 
 // ===================================================================
 
@@ -87,12 +90,12 @@ Using this new interpretation of the commands, calculate the horizontal position
 What do you get if you multiply your final horizontal position by your final depth?
 */
 
-//  (position, depth, aim) (distance, delta_aim) => (position, depth, aim)
-private def addMovementsWithAim (m1: (Int, Int, Int), m2: (Int, Int)): (Int, Int, Int) = (m1(0) + m2(0), m1(1) + m2(0) * m1(2), m1(2) + m2(1))
-def solve_2 (p: List[String]): Int =
-  val (position, depth, aim) = p.map(textToMovement).foldLeft((0, 0, 0))(addMovementsWithAim)
-  position * depth
+private case class MovementWithAim(distance: Int, depth: Int, aim: Int)
+private def addMovementsWithAim (ma: MovementWithAim, m: Movement): MovementWithAim = MovementWithAim(ma.distance + m.distance, ma.depth + m.distance * ma.aim, ma.aim + m.depth)
 
+def solve_2 (p: List[String]): Int =
+  val movementWithAim = p.map(textLineToMovement).foldLeft(MovementWithAim(0, 0, 0))(addMovementsWithAim)
+  movementWithAim.distance * movementWithAim.depth
 
 
 @main def answer_1 = println("2021 - Day 02 - answer 1: " + solve_1(puzzle))
