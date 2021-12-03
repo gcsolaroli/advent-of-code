@@ -1,7 +1,5 @@
 package it.imolab.adventOfCode._2021
 
-import it.imolab.adventOfCode._2021.Day01 as Day01
-
 final class Day02_Test extends TestSuite:
   val samplePuzzle: List[String] = List(
     "forward 5",
@@ -16,6 +14,6 @@ final class Day02_Test extends TestSuite:
     Day02.solve_1(samplePuzzle) `shouldBe` 150
   }
 
-  test("aswwer 2") {
+  test("answer 2") {
     Day02.solve_2(samplePuzzle) `shouldBe` 900
   }

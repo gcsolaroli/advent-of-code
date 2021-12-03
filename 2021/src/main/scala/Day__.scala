@@ -1,27 +1,23 @@
-package it.imolab.adventOfCode._2021
+package it.imolab.adventOfCode._2021.Day__
 
-private val puzzle: List[Int] = ???
+import scala.io.Source
+
+private val puzzle: List[String] = List() // Source.fromFile("2021/src/main/resources/Day__.input.txt").getLines.toList
 
 /*
-import scala.io.Source
-object Day__ :
-  val puzzle: Any = Source.fromFile("2021/src/main/resources/Day__.input.txt")
 
-  / *
-
-  * /
-  def solve_1 (p: Any): Any = ???
+*/
+def solve_1 (p: Any): Any = 1
 
 // ===================================================================
 
-/ *
+/*
 
-* /
-
-  def solve_2 (p: Any): Any = ???
-
-
-@main def answer_1 = println("2021 - Day __ - answer 1: " + Day__.solve_1(puzzle))
-
-@main def answer_2 = println("2021 - Day __ - answer 2: " + Day__.solve_2(puzzle))
 */
+
+def solve_2 (p: Any): Any = 2
+
+
+@main def answer_1 = println("2021 - Day __ - answer 1: " + solve_1(puzzle))
+
+@main def answer_2 = println("2021 - Day __ - answer 2: " + solve_2(puzzle))
