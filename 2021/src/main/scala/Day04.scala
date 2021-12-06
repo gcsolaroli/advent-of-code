@@ -2,8 +2,7 @@ package it.imolab.adventOfCode._2021.Day04
 
 import scala.io.Source
 
-private val puzzle: List[String] =
-  Source.fromFile("2021/src/main/resources/Day04.input.txt").getLines.toList
+private val puzzle: List[String] = Source.fromFile("2021/src/main/resources/Day04.input.txt").getLines.toList
 
 /*
 You're already almost 1.5km (almost a mile) below the surface of the ocean, already so deep that you can't see any sunlight.
@@ -75,51 +74,7 @@ Then, multiply that sum by the number that was just called when the board won, 2
 To guarantee victory against the giant squid, figure out which board will win first.
 What will your final score be if you choose that board?
 
- */
-
-private case class Board(values: List[List[Int]])
-
-
-private def splitString (value: String, splitter: String) : List[String] =
-  value.split(splitter) match
-    case a: Array[String | Null] => a.map { v => v match
-      case s: String  => s
-      case _          => ""
-    }.filter(!_.isEmpty).toList
-    case _ => List()
-
-
-private def parseBoard (lines: List[String]): Board =
-  Board(lines.map(l => splitString(l, " ").map(_.toInt)))
-
-
-private def parseBoards (allLines: List[String]): List[Board] =
-  def emptyLine (s: String) : Boolean = s.trim match
-    case ss: String => s.isEmpty
-    case _          => false
-
-  def go (acc: List[Board], lines: List[String]) : List[Board] = 
-    val (takeLines: List[String], dropLines: List[String]) = ((p : (List[String], List[String])) => { val (h,t) = p; (h, t.dropWhile(emptyLine)) } ).apply(lines.span(!emptyLine(_)))
-
-    if takeLines.isEmpty then
-      if dropLines.isEmpty then
-        acc
-      else
-        go(acc, dropLines)
-    else
-      go(acc.appended(parseBoard(takeLines)), dropLines)
-
-  go(List(), allLines)
-
-
-private def doesBoardWins (selectedNumbers: List[Int])(board: Board): Boolean =
-  !board.values.transpose.filter(_.diff(selectedNumbers).isEmpty).isEmpty ||
-  !board.values.filter(_.diff(selectedNumbers).isEmpty).isEmpty
-
-private def searchWinningBoard (boards: List[Board], drawnNumbers: List[Int], leftoverNumbers: List[Int]) : (Board, List[Int], List[Int]) =
-    boards.filter(doesBoardWins(drawnNumbers))
-      .headOption.map((_, drawnNumbers, leftoverNumbers))
-      .getOrElse(searchWinningBoard(boards, leftoverNumbers.head :: drawnNumbers, leftoverNumbers.tail))
+*/
 
 def solve_1(p: List[String]): Int =
   val inputs: List[Int] = splitString(p.head, ",").map(_.toInt)
@@ -166,3 +121,49 @@ def solve_2(p: List[String]): Int =
 @main def answer_1 = println("2021 - Day 04 - answer 1: " + solve_1(puzzle))
 
 @main def answer_2 = println("2021 - Day 04 - answer 2: " + solve_2(puzzle))
+
+// =============================================================================
+
+private case class Board(values: List[List[Int]])
+
+
+private def splitString (value: String, splitter: String) : List[String] =
+  value.split(splitter) match
+    case a: Array[String | Null] => a.map { v => v match
+      case s: String  => s
+      case _          => ""
+    }.filter(!_.isEmpty).toList
+    case _ => List()
+
+
+private def parseBoard (lines: List[String]): Board =
+  Board(lines.map(l => splitString(l, " ").map(_.toInt)))
+
+
+private def parseBoards (allLines: List[String]): List[Board] =
+  def emptyLine (s: String) : Boolean = s.trim match
+    case ss: String => s.isEmpty
+    case _          => false
+
+  def go (acc: List[Board], lines: List[String]) : List[Board] = 
+    val (takeLines: List[String], dropLines: List[String]) = ((p : (List[String], List[String])) => { val (h,t) = p; (h, t.dropWhile(emptyLine)) } ).apply(lines.span(!emptyLine(_)))
+
+    if takeLines.isEmpty then
+      if dropLines.isEmpty then
+        acc
+      else
+        go(acc, dropLines)
+    else
+      go(acc.appended(parseBoard(takeLines)), dropLines)
+
+  go(List(), allLines)
+
+
+private def doesBoardWins (selectedNumbers: List[Int])(board: Board): Boolean =
+  !board.values.transpose.filter(_.diff(selectedNumbers).isEmpty).isEmpty ||
+  !board.values.filter(_.diff(selectedNumbers).isEmpty).isEmpty
+
+private def searchWinningBoard (boards: List[Board], drawnNumbers: List[Int], leftoverNumbers: List[Int]) : (Board, List[Int], List[Int]) =
+    boards.filter(doesBoardWins(drawnNumbers))
+      .headOption.map((_, drawnNumbers, leftoverNumbers))
+      .getOrElse(searchWinningBoard(boards, leftoverNumbers.head :: drawnNumbers, leftoverNumbers.tail))

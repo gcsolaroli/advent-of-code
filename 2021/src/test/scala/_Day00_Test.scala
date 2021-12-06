@@ -5,7 +5,6 @@ final class Day00_Test extends TestSuite:
 
   test("answer 1") {
     Day__.solve_1(samplePuzzle) `shouldBe` 1
-    // 1 `shouldBe` 1
   }
 
   test("answer 2") {
