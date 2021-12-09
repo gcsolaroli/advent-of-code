@@ -159,10 +159,6 @@ def solve_2 (p: List[String]): Int =
     List('a', 'b', 'c', 'd', 'f', 'g')      -> '9'
   )
 
-  val t = signalMatching.transform((k, v) => (k, v)).values
-
-  // val decodedSignals : Map[Char, Char] = Map('a' -> 'a', 'b' -> 'b', 'c' -> 'c', 'd' -> 'd', 'e' -> 'e', 'f' -> 'f', 'g' -> 'g')
-
   def decodeValues (input: (List[Digit], List[Digit])): Int =
     def encode (signals: List[Char])(c: Char): Char = signals(c.toInt - 'a'.toInt)
 
@@ -178,9 +174,6 @@ def solve_2 (p: List[String]): Int =
   p .map(parseInput)
     .map(decodeValues)
     .sum
-
-  // println(s"x: ${x.mkString}")
-  // 2
 
 
 @main def answer_1 = println("2021 - Day 08 - answer 1: " + solve_1(puzzle))
