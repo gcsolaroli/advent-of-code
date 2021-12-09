@@ -145,7 +145,42 @@ What do you get if you add up all of the output values?
 
 */
 
-def solve_2 (p: List[String]): Int = 2
+def solve_2 (p: List[String]): Int =
+  val signalMatching = Map(
+    List('a', 'b', 'c', 'e', 'f', 'g')      -> '0',
+    List('c', 'f')                          -> '1',
+    List('a', 'c', 'd', 'e', 'g')           -> '2',
+    List('a', 'c', 'd', 'f', 'g')           -> '3',
+    List('b', 'c', 'd', 'f')                -> '4',
+    List('a', 'b', 'd', 'f', 'g')           -> '5',
+    List('a', 'b', 'd', 'e', 'f', 'g')      -> '6',
+    List('a', 'c', 'f')                     -> '7',
+    List('a', 'b', 'c', 'd', 'e', 'f', 'g') -> '8',
+    List('a', 'b', 'c', 'd', 'f', 'g')      -> '9'
+  )
+
+  val t = signalMatching.transform((k, v) => (k, v)).values
+
+  // val decodedSignals : Map[Char, Char] = Map('a' -> 'a', 'b' -> 'b', 'c' -> 'c', 'd' -> 'd', 'e' -> 'e', 'f' -> 'f', 'g' -> 'g')
+
+  def decodeValues (input: (List[Digit], List[Digit])): Int =
+    def encode (signals: List[Char])(c: Char): Char = signals(c.toInt - 'a'.toInt)
+
+    def isValidPermutation (inputs: List[Digit])(permutation: List[Char]): Boolean =
+      inputs.forall(d => signalMatching.keySet.contains(d.pattern.map(encode(permutation)).toList.sorted))
+
+    def toDigit (segments: List[Char]): Char = signalMatching.get(segments.sorted).getOrElse('0')
+
+    val validPermutation = List('a', 'b', 'c', 'd', 'e', 'f', 'g').permutations.filter(isValidPermutation(input._1)).toList
+
+    input._2.map(d => toDigit(d.pattern.map(encode(validPermutation(0))).toList)).mkString.toInt
+
+  p .map(parseInput)
+    .map(decodeValues)
+    .sum
+
+  // println(s"x: ${x.mkString}")
+  // 2
 
 
 @main def answer_1 = println("2021 - Day 08 - answer 1: " + solve_1(puzzle))
@@ -155,11 +190,21 @@ def solve_2 (p: List[String]): Int = 2
 
 // ===============================================
 
-private case class SignalPattern(pattern: String)
-private case class OutputDigit(pattern: String)
+// private case class SignalPattern(pattern: String)
+private case class Digit(pattern: String)
 
-private def parseInput (s: String) : (SignalPattern, List[OutputDigit]) =
+private def parseInput (s: String) : (List[Digit], List[Digit]) =
   //  acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf
-  val pattern = """([[a-z]\s]+) \| ([a-z]+) ([a-z]+) ([a-z]+) ([a-z]+)""".r
-  val m = pattern.findAllIn(s).matchData.next
-  (SignalPattern(m.group(1)), List(OutputDigit(m.group(2)), OutputDigit(m.group(3)), OutputDigit(m.group(4)), OutputDigit(m.group(5))))
+  val splitPattern = """([[a-z]\s]+) \| ([[a-z]\s]+)""".r
+  val m = splitPattern.findAllIn(s).matchData.next
+  val signals = m.group(1)
+  val outputs = m.group(2)
+
+  def parseDigits (s: String) : List[Digit] =
+    val pattern = """([a-z]+)""".r
+    val matches = pattern.findAllIn(s).matchData
+    matches.map(m => Digit(m.toString)).toList
+
+  (parseDigits(signals), parseDigits(outputs))
+
+  
