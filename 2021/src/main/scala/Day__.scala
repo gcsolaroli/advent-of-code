@@ -7,7 +7,7 @@ private val puzzle: List[String] = List() // Source.fromFile("2021/src/main/reso
 /*
 
 */
-def solve_1 (p: Any): Any = 1
+def solve_1 (p: List[String]): Int = 1
 
 // ===================================================================
 
@@ -15,9 +15,11 @@ def solve_1 (p: Any): Any = 1
 
 */
 
-def solve_2 (p: Any): Any = 2
+def solve_2 (p: List[String]): Int = 2
 
 
 @main def answer_1 = println("2021 - Day __ - answer 1: " + solve_1(puzzle))
 
 @main def answer_2 = println("2021 - Day __ - answer 2: " + solve_2(puzzle))
+
+// ===========================================================
