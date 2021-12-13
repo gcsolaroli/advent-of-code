@@ -166,8 +166,6 @@ def solve_2 (p: List[String]): Int = paths_2(connections(p)).size
 
 // ===========================================================
 
-case class Node (name: String, neighbours: List[Node])
-
 private def connections (xs: List[String]): List[(String, String)] =
   def parseConnection (s: String): (String, String) =
     val splitPattern = """([a-zA-Z]+)\-([a-zA-z]+)""".r
