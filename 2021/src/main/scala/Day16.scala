@@ -2,7 +2,7 @@ package it.imolab.adventOfCode._2021.Day16
 
 import scala.io.Source
 
-private val puzzle: List[String] = Source.fromFile("2021/src/main/resources/Day16.input.txt").getLines.toList
+private val puzzle: String = Source.fromFile("2021/src/main/resources/Day16.input.txt").mkString
 
 /*
 As you leave the cave and reach open waters, you receive a transmission from the Elves back on the ship.
@@ -107,7 +107,7 @@ literal values; it has a version sum of 31.
 
 Decode the structure of your hexadecimal-encoded BITS transmission; what do you get if you add up the version numbers in all packets?
 */
-def solve_1 (p: List[String]): Int = versionSum(BITS_Packet.parse(p(0))._1)
+def solve_1 (p: String): Int = versionSum(BITS_Packet.parse(p)._1)
 
 // ===================================================================
 
@@ -143,7 +143,7 @@ F600BC2D8F produces 0, because 5 is not greater than 15.
 What do you get if you evaluate the expression represented by your hexadecimal-encoded BITS transmission?
 */
 
-def solve_2 (p: List[String]): BigInt = BITS_Packet.parse(p(0))._1.value
+def solve_2 (p: String): BigInt = BITS_Packet.parse(p)._1.value
 
 
 @main def answer_1 = println("2021 - Day 16 - answer 1: " + solve_1(puzzle))

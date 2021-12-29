@@ -1,7 +1,6 @@
 package it.imolab.adventOfCode._2021
 
 final class Day16_Test extends TestSuite:
-  val samplePuzzle: List[String] = List()
 
   test("answer 1") {
     Day16.parseHex("D2FE28") `shouldBe` Day16.parseBits("110 100 10111 11110 00101 000")
